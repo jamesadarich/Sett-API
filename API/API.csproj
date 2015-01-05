@@ -84,6 +84,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="FileUploader.cs" />
+    <Compile Include="Filters\UnhandledExceptionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
