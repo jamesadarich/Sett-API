@@ -16,7 +16,7 @@ namespace Sett.API.Filters
             response.Content = new StringContent(context.Exception.Message);
             context.Response = response;
 
-            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("you@yourcompany.com", "user@hotmail.com");
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("jamesrichford@googlemail.com", "jamesrichford@googlemail.com");
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
             client.Port = 25;
             client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
