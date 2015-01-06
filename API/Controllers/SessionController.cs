@@ -11,6 +11,7 @@ namespace Sett.API.Controllers
     {
         [HttpGet]
         [Route("login")]
+        [Filters.UnhandledExceptionFilter]
         public DataTransferObjects.Session Get([FromUri] string username, [FromUri] string password)
         {
             try
