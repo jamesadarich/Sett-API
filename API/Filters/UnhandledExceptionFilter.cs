@@ -16,15 +16,7 @@ namespace Sett.API.Filters
             response.Content = new StringContent(context.Exception.Message);
             context.Response = response;
 
-            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage("jamesrichford@googlemail.com", "jamesrichford@googlemail.com");
-            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
-            client.Port = 25;
-            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Host = "smtp.google.com";
-            mail.Subject = "Sett API Error";
-            mail.Body = context.Exception.Message;
-            client.Send(mail);
+            throw new System.Web.Http.HttpResponseException(response);
         }
     }
 }
