@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
+using Sett.Managers.Adapters;
 
 namespace Sett.Managers
 {
@@ -11,63 +11,15 @@ namespace Sett.Managers
     {
         public IEnumerable<DataTransferObjects.Article> GetAll()
         {
-            var adapter = new Adapters.ArticleAdapter();
-
-            var repository = new DataAccess.Repository();
-
-            var models = repository.Articles
-                .Include(a => a.ArticleRevisions.Select(ar => ar.Author))
-                .Include(a => a.ArticleRevisions.Select(ar => ar.FeaturedImage));
-
-            var dtos = models
-                .AsEnumerable()
-                .Select(model => adapter.AdaptFromModel(model))
-                .OrderByDescending(dto => dto.Revisions.First().Timestamp);
-
-            return dtos;
+            var t = new Models.Article();
+            return new DataAccess.Repository().Articles.ToList().Select(a => a.ToDto());
         }
 
-        public DataTransferObjects.Article Create(string slug, Guid sessionId)
+        public DataTransferObjects.Article Get(Guid articleId)
         {
-            var s = new SessionManager().Get(sessionId);
-
-            var repository = new DataAccess.Repository();
-
-            var model = new Models.Article();
-            model.Slug = slug;
-
-            repository.Articles.Add(model);
-            repository.SaveChanges();
-
-            var adapter = new Adapters.ArticleAdapter();
-            return adapter.AdaptFromModel(model);
-
-        }
-
-        public DataTransferObjects.Article Get(Guid id)
-        {
-            var adapter = new Adapters.ArticleAdapter();
-
-            var repository = new DataAccess.Repository();
-
-            return adapter.AdaptFromModel(repository.Articles
-                .Include(a => a.ArticleRevisions)
-                .Single(x => x.Id == id)
-                );
-        }
-
-        public void Delete(Guid id, Guid sessionId)
-        {
-            var sessionManager = new SessionManager();
-            sessionManager.Get(sessionId);
-
-            var repository = new DataAccess.Repository();
-
-            repository.ArticleRevisions.RemoveRange(repository.ArticleRevisions.Where(revision => revision.ArticleId == id));
-
-            repository.Articles.Remove(repository.Articles.Single(article => article.Id == id));
-
-            repository.SaveChanges();
+            return new DataAccess.Repository().Articles
+                                        .Where(a => a.Id == articleId)
+                                        .ToList().Single().ToDto();
         }
     }
 }

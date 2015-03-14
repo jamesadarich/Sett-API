@@ -5,36 +5,32 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Sett.API.Controllers
+namespace Sett.Api.Controllers
 {
     public class ArticleRevisionController : ApiController
     {
-        [HttpPost]
-        [Route("article-revision")]
-        public DataTransferObjects.ArticleRevision Post([FromBody] DataTransferObjects.ArticleRevision articleRevision)
+        [HttpGet]
+        [Route("article/{articleId}/revisions/latest")]
+        public DataTransferObjects.ArticleRevision GetLatestRevision(Guid articleId)
         {
-            try
-            {
-                var sessionId = Guid.Parse(Request.Headers.Authorization.Scheme);
+            return new Managers.ArticleRevisionManager().GetLatest(articleId);
+        }
 
-                var manager = new Managers.ArticleRevisionManager();
+        [HttpGet]
+        [Route("article/{articleId}/revisions")]
+        public IEnumerable<DataTransferObjects.ArticleRevision> GetAll(Guid articleId)
+        {
+            return new Managers.ArticleRevisionManager().GetAll(articleId);
+        }
 
-                return manager.Create(
-                                        articleRevision.Title,
-                                        articleRevision.Content,
-                                        articleRevision.Summary,
-                                        articleRevision.ArticleId,
-                                        articleRevision.FeaturedImage.Id,
-                                        sessionId
-                                      );
-
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                response.Content = new StringContent(e.Message);
-                throw new HttpResponseException(response);
-            }
+        [HttpPost]
+        [Route("article/revision")]
+        [Authorize]
+        [Filters.UnhandledExceptionFilter]
+        public DataTransferObjects.ArticleRevision PostRevision([FromBody] DataTransferObjects.ArticleRevision revision)
+        {
+            var username = User.Identity.Name;
+            return new Managers.ArticleRevisionManager().CreateArticleRevision(revision, username);
         }
     }
 }

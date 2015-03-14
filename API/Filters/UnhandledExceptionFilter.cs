@@ -6,12 +6,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Filters;
 
-namespace Sett.API.Filters
+namespace Sett.Api.Filters
 {
     public class UnhandledExceptionFilter : ExceptionFilterAttribute
     {
         public override void OnException(HttpActionExecutedContext context)
         {
+            new Managers.ExceptionManager().SendReport(context.Exception);
+
             var response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             response.Content = new StringContent(context.Exception.Message);
             context.Response = response;

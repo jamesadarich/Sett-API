@@ -98,17 +98,11 @@ namespace Sett.Models
             set;
         }
 
-        private Guid _featuredImageId;
-        public Guid FeaturedImageId
+        private string _featuredImageUrl;
+        public string FeaturedImageUrl
         {
-            get { return _featuredImageId; }
-            set { _featuredImageId = value; }
-        }
-
-        public virtual Image FeaturedImage
-        {
-            get;
-            set;
+            get { return _featuredImageUrl; }
+            set { _featuredImageUrl = value; }
         }
     }
 }

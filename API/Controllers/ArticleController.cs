@@ -11,32 +11,16 @@ namespace Sett.API.Controllers
     {
         [HttpGet]
         [Route("articles")]
-        public IEnumerable<DataTransferObjects.Article> Get()
+        public IEnumerable<DataTransferObjects.Article> GetAllArticles()
         {
-            var manager = new Managers.ArticleManager();
-
-            return manager.GetAll();
+            return new Managers.ArticleManager().GetAll();
         }
 
         [HttpGet]
-        [Route("article")]
-        public DataTransferObjects.Article Get([FromUri] Guid id)
+        [Route("articles/{articleId}")]
+        public DataTransferObjects.Article GetArticle(Guid articleId)
         {
-            var manager = new Managers.ArticleManager();
-
-            return manager.Get(id);
+            return new Managers.ArticleManager().Get(articleId);
         }
-
-        [HttpDelete]
-        [Route("article")]
-        public void Delete([FromUri] Guid id)
-        {
-            var sessionId = Guid.Parse(Request.Headers.Authorization.Scheme);
-
-            var manager = new Managers.ArticleManager();
-
-            manager.Delete(id, sessionId);
-        }
-
     }
 }

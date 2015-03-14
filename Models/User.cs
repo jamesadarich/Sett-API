@@ -60,13 +60,6 @@ namespace Sett.Models
             }
         }
 
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
-        }
-
         private string _emailAddress;
         public string EmailAddress
         {

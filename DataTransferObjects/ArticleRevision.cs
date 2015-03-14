@@ -8,6 +8,9 @@ namespace Sett.DataTransferObjects
     public class ArticleRevision
     {
         [DataMember]
+        public Guid Id;
+
+        [DataMember]
         public string Title;
 
         [DataMember]
@@ -26,6 +29,6 @@ namespace Sett.DataTransferObjects
         public User Author;
 
         [DataMember]
-        public Image FeaturedImage;
+        public string FeaturedImageUrl;
     }
 }

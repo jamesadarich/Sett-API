@@ -18,7 +18,7 @@ namespace Sett.DataAccess
         public DbSet<Models.Article> Articles { get; set; }
         public DbSet<Models.ArticleRevision> ArticleRevisions { get; set; }
         public DbSet<Models.User> Users { get; set; }
-        public DbSet<Models.Image> Images { get; set; }
+        //public DbSet<Models.Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         { 

@@ -3,45 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
+using Sett.Managers.Adapters;
 
 namespace Sett.Managers
 {
     public class ArticleRevisionManager
     {
-        public DataTransferObjects.ArticleRevision Create(string title, string content, string summary, Guid articleId, Guid featuredImageId, Guid sessionId)
+        public DataTransferObjects.ArticleRevision GetLatest(Guid articleId)
         {
-            var sessionManager = new SessionManager();
-            var session = sessionManager.Get(sessionId);
+            return new DataAccess.Repository().ArticleRevisions
+                .Where(ar => ar.ArticleId == articleId)
+                .OrderByDescending(ar => ar.Timestamp)
+                .First().ToDto();
+        }
 
-            if (articleId == Guid.Empty)
-            {
-                var slug = title;
-                slug = slug.Trim();
-                slug = slug.ToLower();
-                slug = slug.Replace(" ", "_");
-                var article = new ArticleManager().Create(slug, sessionId);
-                articleId = article.Id;
-            }
+        public IEnumerable<DataTransferObjects.ArticleRevision> GetAll(Guid articleId)
+        {
+            return new DataAccess.Repository().ArticleRevisions
+                .Where(ar => ar.ArticleId == articleId)
+                .OrderByDescending(ar => ar.Timestamp)
+                .ToList()
+                .Select(ar => ar.ToDto());
+        }
 
+        public DataTransferObjects.ArticleRevision CreateArticleRevision(DataTransferObjects.ArticleRevision revision, string username)
+        {
             var repository = new DataAccess.Repository();
 
-            var model = new Models.ArticleRevision();
-            model.Title = title;
-            model.Content = content;
-            model.Summary = summary;
-            model.ArticleId = articleId;
-            model.AuthorId = session.UserId;
-            model.FeaturedImageId = featuredImageId;
-            model.Timestamp = DateTime.UtcNow;
+            var revisionModel = revision.ToModel(repository);
+            revisionModel.Author = repository.Users.Single(u => u.Username == username);
+            revisionModel.AuthorId = revisionModel.Author.Id;
 
+            revisionModel.Timestamp = DateTime.UtcNow;
 
-            repository.ArticleRevisions.Add(model);
+            if (revisionModel.ArticleId == new Guid())
+            {
+                var article = new Models.Article();
+                article.Id = Guid.NewGuid();
+                var regex = new System.Text.RegularExpressions.Regex(@"[^a-zA-Z0-9 \-]");
+                article.Slug = regex.Replace(revisionModel.Title.Replace(" ", "-"), "");
+                article.ArticleRevisions.Add(revisionModel);
+                revisionModel.ArticleId = article.Id;
+                revisionModel.Article = article;
+
+                repository.Articles.Add(article);
+                repository.SaveChanges();
+                return revisionModel.ToDto();
+            }
+
+            repository.ArticleRevisions.Add(revisionModel);
             repository.SaveChanges();
 
-            var adapter = new Adapters.ArticleRevisionAdapter();
-            return adapter.AdaptFromModel(model);
-
+            return revisionModel.ToDto();
         }
     }
 }
