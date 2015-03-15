@@ -22,8 +22,10 @@ namespace Sett.Api
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            /*
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+             */
         }
     }
 }
