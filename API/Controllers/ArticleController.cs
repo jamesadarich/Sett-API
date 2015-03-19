@@ -11,9 +11,12 @@ namespace Sett.API.Controllers
     {
         [HttpGet]
         [Route("articles")]
-        public IEnumerable<DataTransferObjects.Article> GetAllArticles()
+        public IEnumerable<DataTransferObjects.Article> GetAllArticles( [FromUri] string where = null,
+                                                                        [FromUri] string sort = null,
+                                                                        [FromUri] int skip = 0,
+                                                                        [FromUri] int take = 10)
         {
-            return new Managers.ArticleManager().GetAll();
+            return new Managers.ArticleManager().GetAll(where, sort, skip, take);
         }
 
         [HttpGet]
