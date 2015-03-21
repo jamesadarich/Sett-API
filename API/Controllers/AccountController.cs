@@ -20,7 +20,6 @@ namespace Sett.Api
 
         [AllowAnonymous]
         [Route("register")]
-        [UnhandledExceptionFilter]
         [HttpPost]
         public IHttpActionResult Register([FromBody] Sett.DataTransferObjects.Identity userModel)
         {

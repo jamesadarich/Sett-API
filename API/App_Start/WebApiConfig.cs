@@ -22,6 +22,8 @@ namespace Sett.Api
                 defaults: new { id = RouteParameter.Optional }
             );
 
+            config.Filters.Add(new Filters.UnhandledExceptionFilter());
+
             /*
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
