@@ -33,7 +33,9 @@ namespace Sett.Managers
         {
             var repository =  new DataAccess.Repository();
             var user = repository.Users.Single(u => u.Username == username);
+            var revisions = repository.ArticleRevisions.Single(a => a.ArticleId == articleId);
             var article = repository.Articles.Single(a => a.Id == articleId);
+            repository.ArticleRevisions.Remove(revisions);
             repository.Articles.Remove(article);
             repository.SaveChanges();
         }
