@@ -28,5 +28,14 @@ namespace Sett.Managers
                                         .Where(a => a.Id == articleId)
                                         .ToList().Single().ToDto();
         }
+
+        public void Delete(Guid articleId, string username)
+        {
+            var repository =  new DataAccess.Repository();
+            var user = repository.Users.Single(u => u.Username == username);
+            var article = repository.Articles.Single(a => a.Id == articleId);
+            repository.Articles.Remove(article);
+            repository.SaveChanges();
+        }
     }
 }

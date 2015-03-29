@@ -25,5 +25,14 @@ namespace Sett.API.Controllers
         {
             return new Managers.ArticleManager().Get(articleId);
         }
+
+        [HttpDelete]
+        [Route("articles/{articleId}")]
+        [Authorize]
+        public void DeleteArticle(Guid articleId)
+        {
+            new Managers.ArticleManager().Delete(articleId, User.Identity.Name);
+            StatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

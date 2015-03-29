@@ -26,7 +26,6 @@ namespace Sett.Api.Controllers
         [HttpPost]
         [Route("article/revision")]
         [Authorize]
-        [Filters.UnhandledExceptionFilter]
         public DataTransferObjects.ArticleRevision PostRevision([FromBody] DataTransferObjects.ArticleRevision revision)
         {
             var username = User.Identity.Name;
