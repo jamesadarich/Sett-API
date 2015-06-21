@@ -10,28 +10,29 @@ namespace Sett.API.Controllers
     public class ArticleController : ApiController
     {
         [HttpGet]
-        [Route("articles")]
-        public IEnumerable<DataTransferObjects.Article> GetAllArticles( [FromUri] string where = null,
+        [Route("{domainUri}/articles")]
+        public IEnumerable<DataTransferObjects.Article> GetAllArticles( string domainUri,
+                                                                        [FromUri] string where = null,
                                                                         [FromUri] string sort = null,
                                                                         [FromUri] int skip = 0,
                                                                         [FromUri] int take = 10)
         {
-            return new Managers.ArticleManager().GetAll(where, sort, skip, take);
+            return new Managers.ArticleManager(domainUri).GetAll(where, sort, skip, take);
         }
 
         [HttpGet]
-        [Route("articles/{articleId}")]
-        public DataTransferObjects.Article GetArticle(Guid articleId)
+        [Route("{domainUri}/articles/{articleId}")]
+        public DataTransferObjects.Article GetArticle(string domainUri, Guid articleId)
         {
-            return new Managers.ArticleManager().Get(articleId);
+            return new Managers.ArticleManager(domainUri).Get(articleId);
         }
 
         [HttpDelete]
-        [Route("articles/{articleId}")]
+        [Route("{domainUri}/articles/{articleId}")]
         [Authorize]
-        public void DeleteArticle(Guid articleId)
+        public void DeleteArticle(string domainUri, Guid articleId)
         {
-            new Managers.ArticleManager().Delete(articleId, User.Identity.Name);
+            new Managers.ArticleManager(domainUri).Delete(articleId, User.Identity.Name);
             StatusCode(HttpStatusCode.NoContent);
         }
     }

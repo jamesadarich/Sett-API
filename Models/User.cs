@@ -66,5 +66,18 @@ namespace Sett.Models
             get { return _emailAddress; }
             set { _emailAddress = value; }
         }
+
+        private Guid _domainId;
+        public Guid DomainId
+        {
+            get { return _domainId; }
+            set { _domainId = value; }
+        }
+
+        public virtual Domain Domain
+        {
+            get;
+            set;
+        }
     }
 }

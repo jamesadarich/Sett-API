@@ -10,26 +10,26 @@ namespace Sett.Api.Controllers
     public class ArticleRevisionController : ApiController
     {
         [HttpGet]
-        [Route("article/{articleId}/revisions/latest")]
-        public DataTransferObjects.ArticleRevision GetLatestRevision(Guid articleId)
+        [Route("{domainUri}/article/{articleId}/revisions/latest")]
+        public DataTransferObjects.ArticleRevision GetLatestRevision(string domainUri, Guid articleId)
         {
-            return new Managers.ArticleRevisionManager().GetLatest(articleId);
+            return new Managers.ArticleRevisionManager(domainUri).GetLatest(articleId);
         }
 
         [HttpGet]
-        [Route("article/{articleId}/revisions")]
-        public IEnumerable<DataTransferObjects.ArticleRevision> GetAll(Guid articleId)
+        [Route("{domainUri}/article/{articleId}/revisions")]
+        public IEnumerable<DataTransferObjects.ArticleRevision> GetAll(string domainUri, Guid articleId)
         {
-            return new Managers.ArticleRevisionManager().GetAll(articleId);
+            return new Managers.ArticleRevisionManager(domainUri).GetAll(articleId);
         }
 
         [HttpPost]
-        [Route("article/revision")]
+        [Route("{domainUri}/article/revision")]
         [Authorize]
-        public DataTransferObjects.ArticleRevision PostRevision([FromBody] DataTransferObjects.ArticleRevision revision)
+        public DataTransferObjects.ArticleRevision PostRevision(string domainUri, [FromBody] DataTransferObjects.ArticleRevision revision)
         {
             var username = User.Identity.Name;
-            return new Managers.ArticleRevisionManager().CreateArticleRevision(revision, username);
+            return new Managers.ArticleRevisionManager(domainUri).CreateArticleRevision(revision, username);
         }
     }
 }

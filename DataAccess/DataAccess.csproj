@@ -79,6 +79,7 @@
     <Compile Include="AuthContext.cs" />
     <Compile Include="Extensions\SortExtension.cs" />
     <Compile Include="Extensions\WhereExtension.cs" />
+    <Compile Include="GenericRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

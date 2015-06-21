@@ -9,21 +9,32 @@ namespace Sett.Managers
 {
     public class ArticleRevisionManager
     {
+        private Models.Domain _domain;
+        private IQueryable<Models.ArticleRevision> _domainArticleRevisions;
+
+        public ArticleRevisionManager(string domainUri)
+        {
+            _domain = new DataAccess.GenericRepository<Models.Domain>().GetAll().Single(x => x.Uri == domainUri);
+            _domainArticleRevisions = new DataAccess.GenericRepository<Models.ArticleRevision>()
+                                                .GetAll()
+                                                .Where(revision => revision.Author.DomainId == _domain.Id);
+        }
+
         public DataTransferObjects.ArticleRevision GetLatest(Guid articleId)
         {
-            return new DataAccess.Repository().ArticleRevisions
-                .Where(ar => ar.ArticleId == articleId)
-                .OrderByDescending(ar => ar.Timestamp)
-                .First().ToDto();
+            return _domainArticleRevisions
+                        .Where(ar => ar.ArticleId == articleId)
+                        .OrderByDescending(ar => ar.Timestamp)
+                        .First().ToDto();
         }
 
         public IEnumerable<DataTransferObjects.ArticleRevision> GetAll(Guid articleId)
         {
-            return new DataAccess.Repository().ArticleRevisions
-                .Where(ar => ar.ArticleId == articleId)
-                .OrderByDescending(ar => ar.Timestamp)
-                .ToList()
-                .Select(ar => ar.ToDto());
+            return _domainArticleRevisions
+                        .Where(ar => ar.ArticleId == articleId)
+                        .OrderByDescending(ar => ar.Timestamp)
+                        .ToList()
+                        .Select(ar => ar.ToDto());
         }
 
         public DataTransferObjects.ArticleRevision CreateArticleRevision(DataTransferObjects.ArticleRevision revision, string username)

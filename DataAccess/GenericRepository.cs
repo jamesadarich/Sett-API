@@ -8,21 +8,22 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Sett.DataAccess
 {
-    public class Repository: DbContext
+    public class GenericRepository<Model> : DbContext where Model : class
     {
-        public Repository()
+        public GenericRepository()
             : base("Repository")
         {
         }
 
-        public DbSet<Models.Article> Articles { get; set; }
-        public DbSet<Models.ArticleRevision> ArticleRevisions { get; set; }
-        public DbSet<Models.User> Users { get; set; }
-        public DbSet<Models.Domain> Domains { get; set; }
-        //public DbSet<Models.Image> Images { get; set; }
+        public DbSet<Model> Models { get; set; }
+
+        public IQueryable<Model> GetAll()
+        {
+            return Models.AsQueryable();
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        { 
+        {
             // Configure Code First to ignore PluralizingTableName convention 
             // If you keep this convention then the generated tables will have pluralized names. 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
