@@ -8,7 +8,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Sett.DataAccess
 {
-    public class GenericRepository<Model> : DbContext where Model : class
+    public class GenericRepository<Model> : DbContext where Model : Sett.Models.Model
     {
         public GenericRepository()
             : base("Repository")
@@ -20,6 +20,30 @@ namespace Sett.DataAccess
         public IQueryable<Model> GetAll()
         {
             return Models.AsQueryable();
+        }
+
+        public Model GetById(Guid id)
+        {
+            return Models.Single(model => ((Sett.Models.ModelWithId)(object)model).Id == id);
+        }
+
+        public void Remove(Model model)
+        {
+            Models.Remove(model);
+            this.SaveChanges();
+        }
+
+        public void Add(Model model)
+        {
+            Models.Add(model);
+            SaveChanges();
+        }
+
+        public void Update(Model model)
+        {
+            Models.Attach(model);
+            Entry(model).State = EntityState.Modified;
+            SaveChanges();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

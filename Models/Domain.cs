@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sett.Models
 {
-    public class Domain
+    public class Domain : ModelWithId
     {
         public Domain()
         {
@@ -39,6 +39,20 @@ namespace Sett.Models
         {
             get { return _uri; }
             set { _uri = value; }
+        }
+
+        private string _pageBaseUri;
+        public string PageBaseUri
+        {
+            get { return _pageBaseUri; }
+            set { _pageBaseUri = value; }
+        }
+
+        private string _articleBaseUri;
+        public string ArticleBaseUri
+        {
+            get { return _articleBaseUri; }
+            set { _articleBaseUri = value; }
         }
 
         private ICollection<User> _users;

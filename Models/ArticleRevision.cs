@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sett.Models
 {
-    public class ArticleRevision
+    public class ArticleRevision : ModelWithId
     {
         public ArticleRevision()
         {
@@ -103,6 +103,13 @@ namespace Sett.Models
         {
             get { return _featuredImageUrl; }
             set { _featuredImageUrl = value; }
+        }
+
+        private string _keywords;
+        public string Keywords
+        {
+            get { return _keywords; }
+            set { _keywords = value; }
         }
     }
 }

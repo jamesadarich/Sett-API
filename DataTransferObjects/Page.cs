@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
 namespace Sett.DataTransferObjects
 {
     [DataContract]
-    public class ArticleRevision
+    public class Page
     {
         [DataMember]
         public Guid Id;
@@ -17,21 +20,12 @@ namespace Sett.DataTransferObjects
         public string Content;
 
         [DataMember]
-        public string Summary;
-
-        [DataMember]
-        public Guid ArticleId;
-
-        [DataMember]
-        public DateTime Timestamp;
-
-        [DataMember]
-        public User Author;
-
-        [DataMember]
-        public string FeaturedImageUrl;
+        public string Uri;
 
         [DataMember]
         public IEnumerable<String> Keywords;
+
+        [DataMember]
+        public Domain Domain;
     }
 }

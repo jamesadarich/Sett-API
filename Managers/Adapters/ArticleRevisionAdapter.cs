@@ -23,6 +23,13 @@ namespace Sett.Managers.Adapters
             articleRevisionDto.Timestamp = articleRevision.Timestamp;
             articleRevisionDto.Title = articleRevision.Title;
 
+            if (articleRevision.Keywords != null)
+            {
+                articleRevisionDto.Keywords = articleRevision.Keywords.Split(
+                                                                            new string[] { ", " },
+                                                                            StringSplitOptions.None);
+            }
+
             return articleRevisionDto;
         }
 
@@ -48,6 +55,11 @@ namespace Sett.Managers.Adapters
             articleRevisionModel.Summary = articleRevision.Summary;
             articleRevisionModel.Timestamp = articleRevision.Timestamp;
             articleRevisionModel.Title = articleRevision.Title;
+
+            if (articleRevision.Keywords != null)
+            {
+                articleRevisionModel.Keywords = String.Join(", ", articleRevision.Keywords);
+            }
 
             return articleRevisionModel;
         }

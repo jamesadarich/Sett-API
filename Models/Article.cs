@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sett.Models
 {
-    public class Article
+    public class Article : ModelWithId
     {
         public Article()
         {

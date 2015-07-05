@@ -12,9 +12,9 @@ namespace Sett.Managers
         private Models.Domain _domain;
         private IQueryable<Models.ArticleRevision> _domainArticleRevisions;
 
-        public ArticleRevisionManager(string domainUri)
+        public ArticleRevisionManager(string domainName)
         {
-            _domain = new DataAccess.GenericRepository<Models.Domain>().GetAll().Single(x => x.Uri == domainUri);
+            _domain = new DataAccess.GenericRepository<Models.Domain>().GetAll().Single(x => x.Name == domainName);
             _domainArticleRevisions = new DataAccess.GenericRepository<Models.ArticleRevision>()
                                                 .GetAll()
                                                 .Where(revision => revision.Author.DomainId == _domain.Id);

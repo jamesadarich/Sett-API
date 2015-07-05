@@ -79,13 +79,18 @@
   <ItemGroup>
     <Compile Include="Adapters\ArticleAdapter.cs" />
     <Compile Include="Adapters\ArticleRevisionAdapter.cs" />
+    <Compile Include="Adapters\DomainAdapter.cs" />
     <Compile Include="Adapters\ExceptionAdapter.cs" />
+    <Compile Include="Adapters\PageAdapter.cs" />
     <Compile Include="Adapters\UserAdapter.cs" />
     <Compile Include="ArticleManager.cs" />
     <Compile Include="ArticleRevisionManager.cs" />
     <Compile Include="AuthorizationManager.cs" />
+    <Compile Include="DomainManager.cs" />
     <Compile Include="ExceptionManager.cs" />
+    <Compile Include="PageManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SitemapManager.cs" />
     <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>

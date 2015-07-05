@@ -46,6 +46,9 @@
     <Compile Include="Image.cs" />
     <Compile Include="ArticleRevision.cs" />
     <Compile Include="Article.cs" />
+    <Compile Include="Base Classes\Model.cs" />
+    <Compile Include="Base Classes\ModelWithId.cs" />
+    <Compile Include="Page.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

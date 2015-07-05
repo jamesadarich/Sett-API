@@ -43,11 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain.cs" />
     <Compile Include="ErrorReaper\Application.cs" />
     <Compile Include="ErrorReaper\DotNetException.cs" />
     <Compile Include="ErrorReaper\DotNetReport.cs" />
     <Compile Include="Identity.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="Sitemap.cs" />
+    <Compile Include="SitemapItem.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ArticleRevision.cs" />
     <Compile Include="Article.cs" />

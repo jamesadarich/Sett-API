@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sett.Models
 {
-    public class User
+    public class User : ModelWithId
     {
         private Guid _id;
         public Guid Id
