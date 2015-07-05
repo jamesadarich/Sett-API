@@ -24,7 +24,7 @@ namespace Sett.DataAccess
 
         public Model GetById(Guid id)
         {
-            return Models.Single(model => ((Sett.Models.ModelWithId)(object)model).Id == id);
+            return Models.ToList().Single(model => ((Sett.Models.ModelWithId)(object)model).Id == id);
         }
 
         public void Remove(Model model)

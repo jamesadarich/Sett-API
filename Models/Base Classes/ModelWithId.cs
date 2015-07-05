@@ -9,16 +9,16 @@ namespace Sett.Models
     public abstract class ModelWithId : Model
     {
         private Guid _id;
-        public Guid Id 
-        { 
-            get 
-            { 
-                return _id; 
+        public Guid Id
+        {
+            get
+            {
+                return _id;
             }
-            set 
-            { 
+            set
+            {
                 _id = value;
-            } 
+            }
         }
     }
 }

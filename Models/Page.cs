@@ -9,22 +9,10 @@ namespace Sett.Models
     public class Page : ModelWithId
     {
         public Page()
-        {
-            _id = Guid.NewGuid();
+        {            
+            this.Id = Guid.NewGuid();
         }
 
-        private Guid _id;
-        public Guid Id
-        {
-            get
-            {
-                return _id;
-            }
-            set
-            {
-                _id = value;
-            }
-        }
 
         private string _uri;
         public string Uri
