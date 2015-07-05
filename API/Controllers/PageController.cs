@@ -11,7 +11,6 @@ namespace Sett.API.Controllers
     {
         [HttpGet]
         [Route("{domainName}/pages")]
-        [Authorize]
         public IEnumerable<DataTransferObjects.Page> GetAll(string domainName)
         {
             return new Managers.PageManager(domainName, User.Identity.Name).GetAll();
