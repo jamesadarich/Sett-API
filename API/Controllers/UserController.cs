@@ -10,7 +10,7 @@ namespace Sett.API.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        [Route("{{domainName}}/users/current")]
+        [Route("{domainName}/users/current")]
         [Authorize]
         public DataTransferObjects.User GetCurrentUser(string domainName)
         {
