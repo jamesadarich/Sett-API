@@ -43,12 +43,13 @@ namespace Sett.Managers
 
         public void Delete(Guid articleId, string username)
         {
-            var repository =  new DataAccess.Repository();
+            var repository = new DataAccess.Repository();
             var user = repository.Users.Single(u => u.Username == username);
             var revisions = repository.ArticleRevisions.Where(a => a.ArticleId == articleId);
-            var article = _domainArticles.Single(a => a.Id == articleId);
+            var article = repository.Articles.Single(a => a.Id == articleId);
 
             repository.ArticleRevisions.RemoveRange(revisions);
+            repository.SaveChanges();
             repository.Articles.Remove(article);
             repository.SaveChanges();
         }
