@@ -36,6 +36,7 @@ namespace Sett.Managers
         public DataTransferObjects.Page Create(DataTransferObjects.Page page)
         {
             page.Id = Guid.NewGuid();
+            page.Domain = _domain.ToDto();
             _pageRepository.Add(page.ToModel());
             return _pageRepository.GetById(page.Id).ToDto();
         }
