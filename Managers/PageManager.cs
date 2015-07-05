@@ -25,7 +25,7 @@ namespace Sett.Managers
 
         public IEnumerable<DataTransferObjects.Page> GetAll()
         {
-            return _pageRepository.GetAll().Select(page => page.ToDto());
+            return _pageRepository.GetAll().ToList().Select(page => page.ToDto());
         }
 
         public DataTransferObjects.Page GetById(Guid pageId)
